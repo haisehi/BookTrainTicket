@@ -18,7 +18,7 @@ public class ClientWindow extends JFrame {
     	setBackground(new Color(192, 192, 192));
         // Khởi tạo RMI và giao diện
         try {
-            Registry registry = LocateRegistry.getRegistry("10.60.13.67", 1099);
+            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
             ticketBookingService = (TicketBookingService) registry.lookup("TicketBookingService");
         } catch (Exception e) {
             e.printStackTrace();
