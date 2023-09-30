@@ -107,4 +107,14 @@ public class TicketBookingServiceImpl extends UnicastRemoteObject implements Tic
             System.err.println("Error saving ticket information to file: " + e.getMessage());
         }
     }
+    
+    @Override
+    public String searchTicketByID(String IDTicket) throws RemoteException {
+        for (Ticket ticket : tickets) {
+            if (ticket.getIDTicket().equals(IDTicket)) {
+                return ticket.toString();
+            }
+        }
+        return "Ticket with ID " + IDTicket + " not found.";
+    }
 }

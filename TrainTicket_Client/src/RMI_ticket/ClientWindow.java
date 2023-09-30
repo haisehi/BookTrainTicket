@@ -18,7 +18,7 @@ public class ClientWindow extends JFrame {
     	setBackground(new Color(192, 192, 192));
         // Khởi tạo RMI và giao diện
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+            Registry registry = LocateRegistry.getRegistry("10.60.13.67", 1099);
             ticketBookingService = (TicketBookingService) registry.lookup("TicketBookingService");
         } catch (Exception e) {
             e.printStackTrace();
@@ -28,7 +28,7 @@ public class ClientWindow extends JFrame {
 
         // Tạo giao diện
         setTitle("Ticket Booking Client");
-        setSize(400, 550);
+        setSize(900, 420);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -43,8 +43,11 @@ public class ClientWindow extends JFrame {
 
         JPanel inputPanel = new JPanel();
         inputPanel.setBackground(new Color(0, 255, 128));
-        inputPanel.setLayout(new GridLayout(12, 2));
-
+        inputPanel.setLayout(new GridLayout(4, 6));
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(0, 255, 128));
+        buttonPanel.setLayout(new GridLayout(1, 4));
+        
         // Tạo JComboBox cho train
         String[] trainOptions = {
         		"Train01", 
@@ -57,8 +60,6 @@ public class ClientWindow extends JFrame {
         		"Train08", 
         		"Train09", 
         		"Train10"}; 
-        trainComboBox = new JComboBox<>(trainOptions);
-        trainComboBox.setFont(new Font("Arial", Font.BOLD, 12));
         // Tạo JComboBox cho trainCarriage
         String[] carriageOptions = {
         		"CarriageA01", 
@@ -73,8 +74,6 @@ public class ClientWindow extends JFrame {
         		"CarriageD01", 
         		"CarriageD02", 
         		"CarriageD03"}; 
-        carriageComboBox = new JComboBox<>(carriageOptions);
-        carriageComboBox.setFont(new Font("Arial", Font.BOLD, 12));
         // Tạo JComboBox cho source
         String[] sourceOptions = {
         		"HANOI", 
@@ -84,8 +83,6 @@ public class ClientWindow extends JFrame {
         		"NHATRANG", 
         		"DALAT", 
         		"HOCHIMINH"}; 
-        sourceComboBox = new JComboBox<>(sourceOptions);
-        sourceComboBox.setFont(new Font("Arial", Font.BOLD, 12));
         // Tạo JComboBox cho destination
         String[] destinationOptions = {
         		"HANOI", 
@@ -95,8 +92,6 @@ public class ClientWindow extends JFrame {
         		"NHATRANG", 
         		"DALAT", 
         		"HOCHIMINH"}; 
-        destinationComboBox = new JComboBox<>(destinationOptions);
-        destinationComboBox.setFont(new Font("Arial", Font.BOLD, 12));
         // Tạo JComboBox cho departureTime
         String[] departureTimeOptions = {
         		"00:00 AM",
@@ -123,8 +118,7 @@ public class ClientWindow extends JFrame {
         		"09:00 PM",
         		"10:00 PM",
         		"11:00 PM"}; 
-        departureTimeComboBox = new JComboBox<>(departureTimeOptions);
-        departureTimeComboBox.setFont(new Font("Arial", Font.BOLD, 12));
+        // Tạo JTextField cho date
         dateField = new JTextField();
         dateField.setFont(new Font("Arial", Font.BOLD, 12));
         // Tạo JComboBox cho seatCount
@@ -183,57 +177,108 @@ public class ClientWindow extends JFrame {
             }
         });
         
-        //add component vào giao diện
+        JButton searchButton = new JButton("Search Ticket");
+        searchButton.setFont(new Font("Arial", Font.BOLD, 12));
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchTicketByID();
+            }
+        });
+        
+        
+        //add label và input vào giao diện
+        //train
         JLabel label = new JLabel("Train:");
         label.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(label);
-        inputPanel.add(trainComboBox);
+        //train carriage
         JLabel label_1 = new JLabel("Train Carriage:");
         label_1.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(label_1);
-        inputPanel.add(carriageComboBox);
+        //source
         JLabel label_2 = new JLabel("Source:");
         label_2.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(label_2);
-        inputPanel.add(sourceComboBox);
+        //destination
         JLabel label_3 = new JLabel("Destination:");
         label_3.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(label_3);
-        inputPanel.add(destinationComboBox);
+        //departure time
         JLabel label_4 = new JLabel("Departure Time:");
         label_4.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(label_4);
+        trainComboBox = new JComboBox<>(trainOptions);
+        trainComboBox.setFont(new Font("Arial", Font.BOLD, 12));
+        inputPanel.add(trainComboBox);
+        carriageComboBox = new JComboBox<>(carriageOptions);
+        carriageComboBox.setFont(new Font("Arial", Font.BOLD, 12));
+        inputPanel.add(carriageComboBox);
+        sourceComboBox = new JComboBox<>(sourceOptions);
+        sourceComboBox.setFont(new Font("Arial", Font.BOLD, 12));
+        inputPanel.add(sourceComboBox);
+        destinationComboBox = new JComboBox<>(destinationOptions);
+        destinationComboBox.setFont(new Font("Arial", Font.BOLD, 12));
+        inputPanel.add(destinationComboBox);
+        departureTimeComboBox = new JComboBox<>(departureTimeOptions);
+        departureTimeComboBox.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(departureTimeComboBox);
+        //date
         JLabel label_5 = new JLabel("Date:");
         label_5.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(label_5);
-        inputPanel.add(dateField);
+        //seat count
         JLabel label_6 = new JLabel("Seat Count:");
         label_6.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(label_6);
-        inputPanel.add(seatCountComboBox);
+        //seat price
         JLabel label_7 = new JLabel("Seat Price:");
         label_7.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(label_7);
-        inputPanel.add(seatPriceField);
+        //customer name
         JLabel label_8 = new JLabel("Customer Name:");
         label_8.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(label_8);
-        inputPanel.add(customerNameField);
+        //customer id
         JLabel label_9 = new JLabel("Customer ID:");
         label_9.setFont(new Font("Arial", Font.BOLD, 12));
         inputPanel.add(label_9);
+        inputPanel.add(dateField);
+        inputPanel.add(seatCountComboBox);
+        inputPanel.add(seatPriceField);
+        inputPanel.add(customerNameField);
         inputPanel.add(customerIDField);
-        inputPanel.add(addButton);
-        inputPanel.add(readButton);
-        inputPanel.add(viewButton);
-        inputPanel.add(saveButton);
 
         mainPanel.add(inputPanel, BorderLayout.SOUTH);
         getContentPane().add(mainPanel);
 
+        //nút
+        buttonPanel.add(searchButton);
+        buttonPanel.add(addButton);
+        buttonPanel.add(readButton);
+        buttonPanel.add(viewButton);
+        buttonPanel.add(saveButton);
+        mainPanel.add(buttonPanel, BorderLayout.NORTH);
+        getContentPane().add(mainPanel);
         // Hiển thị cửa sổ
         setVisible(true);
+    }
+    
+ // Phương thức thực hiện tìm kiếm vé tàu bằng IDTicket
+    private void searchTicketByID() {
+        try {
+            String IDTicket = JOptionPane.showInputDialog(this, "Enter the ID Ticket to search:");
+            if (IDTicket != null && !IDTicket.isEmpty()) {
+                String ticketInfo = ticketBookingService.searchTicketByID(IDTicket);
+                if (ticketInfo != null && !ticketInfo.isEmpty()) {
+                    outputTextArea.setText("Ticket Information:\n" + ticketInfo);
+                } else {
+                    outputTextArea.setText("Ticket not found.");
+                }
+            }
+        } catch (RemoteException e) {
+            outputTextArea.setText("Error searching for ticket: " + e.getMessage());
+        }
     }
 
     private void addTicket() {

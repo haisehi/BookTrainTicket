@@ -1,8 +1,2 @@
-ID Ticket: Train04CarriageB0126HANOI12/03/2024,Train: Train04,Train Carriage: CarriageB01,Source: HANOI,Destination: DANANG,Departure Time: 06:00 AM,Date: 12/03/2024,Seat Count: 26,Seat Price: 250.0VND,Customer Name: Huy,Customer ID: 0123456789;
-----------------------------------------------------
-ID Ticket: Train02CarriageA0223HANOI12/03/2024,Train: Train02,Train Carriage: CarriageA02,Source: HANOI,Destination: DANANG,Departure Time: 08:00 PM,Date: 12/03/2024,Seat Count: 23,Seat Price: 250.0VND,Customer Name: Anh,Customer ID: 0123456789;
-----------------------------------------------------
-ID Ticket: Train04CarriageB0113HANOI15/11/2023,Train: Train04,Train Carriage: CarriageB01,Source: HANOI,Destination: QUANGNAM,Departure Time: 03:00 AM,Date: 15/11/2023,Seat Count: 13,Seat Price: 300.0VND,Customer Name: Huynh,Customer ID: 1234567890;
-----------------------------------------------------
-ID Ticket: Train05CarriageB0222DANANG19/12/2023,Train: Train05,Train Carriage: CarriageB02,Source: DANANG,Destination: HOCHIMINH,Departure Time: 03:00 PM,Date: 19/12/2023,Seat Count: 22,Seat Price: 200.0VND,Customer Name: Linh,Customer ID: 1234567890;
-----------------------------------------------------
+ID Ticket: Train01CarriageA017HANOI12/12/2023,Train: Train01,Train Carriage: CarriageA01,Source: HANOI,Destination: DANANG,Departure Time: 07:00 AM,Date: 12/12/2023,Seat Count: 7,Seat Price: 250.0VND,Customer Name: huy,Customer ID: 2222222222222;
+------------------------------------------------------------------------------------------------------------------------------------------------------------

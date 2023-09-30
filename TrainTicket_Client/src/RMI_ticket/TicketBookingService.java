@@ -20,5 +20,5 @@ public interface TicketBookingService extends Remote {
     String getTicketInfo() throws RemoteException;
 	void saveToFile() throws RemoteException;
 	String readFile() throws RemoteException;
-	
+	String searchTicketByID(String IDTicket) throws RemoteException;
 }
