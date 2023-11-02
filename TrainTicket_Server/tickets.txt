@@ -1,2 +1,0 @@
-ID Ticket: Train01CarriageA011HANOI1,Train: Train01,Train Carriage: CarriageA01,Source: HANOI,Destination: HANOI,Departure Time: 00:00 AM,Date: 1,Seat Count: 1,Seat Price: 1.0VND,Customer Name: 1,Customer ID: 1;
-------------------------------------------------------------------------------------------------------------------------------------------------------------

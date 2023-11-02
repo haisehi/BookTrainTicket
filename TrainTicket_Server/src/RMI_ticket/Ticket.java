@@ -1,24 +1,25 @@
 package RMI_ticket;
 
 import java.io.Serializable;
+import java.util.Date; // Import thư viện Date
 
 public class Ticket implements Serializable {
-	private String IDTicket;
+    private String IDTicket;
     private String train;
     private String trainCarriage;
     private String source;
     private String destination;
     private String departureTime;
-    private String Date;
+    private Date Date; // Thay đổi kiểu dữ liệu thành Date
     private int seatCount;
     private double seatPrice;
     private String customerName;
     private String customerID;
 
-    public Ticket(String IDTicket, String train, String trainCarriage, String source, String destination, String departureTime, String Date, int seatCount, double seatPrice, String customerName, String customerID) {
+    public Ticket(String IDTicket, String train, String trainCarriage, String source, String destination, String departureTime, Date Date, int seatCount, double seatPrice, String customerName, String customerID) {
         this.IDTicket = IDTicket;
         this.trainCarriage = trainCarriage;
-    	this.train = train;
+        this.train = train;
         this.source = source;
         this.destination = destination;
         this.departureTime = departureTime;
@@ -81,13 +82,14 @@ public class Ticket implements Serializable {
 	public void setDepartureTime(String departureTime) {
 		this.departureTime = departureTime;
 	}
-	public String getDate() {
-		return Date;
-	}
+    // Tạo getter và setter cho trường Date
+    public Date getDate() {
+        return Date;
+    }
 
-	public void setDate(String date) {
-		Date = date;
-	}
+    public void setDate(Date Date) {
+        this.Date = Date;
+    }
 
 	public int getSeatCount() {
 		return seatCount;
@@ -123,11 +125,11 @@ public class Ticket implements Serializable {
 
 
 	@Override
-	public String toString() {
-		return "Ticket [IDTicket=" + IDTicket + ", train=" + train + ", trainCarriage=" + trainCarriage + ", source="
-				+ source + ", destination=" + destination + ", departureTime=" + departureTime + ", Date=" + Date
-				+ ", seatCount=" + seatCount + ", seatPrice=" + seatPrice +" VND"+ ", customerName=" + customerName
-				+ ", customerID=" + customerID + "]";
-	}
+    public String toString() {
+        return "Ticket [IDTicket=" + IDTicket + ", train=" + train + ", trainCarriage=" + trainCarriage + ", source=" + source
+                + ", destination=" + destination + ", departureTime=" + departureTime + ", Date=" + Date
+                + ", seatCount=" + seatCount + ", seatPrice=" + seatPrice + " VND" + ", customerName=" + customerName
+                + ", customerID=" + customerID + "]";
+    }
 	
 }
