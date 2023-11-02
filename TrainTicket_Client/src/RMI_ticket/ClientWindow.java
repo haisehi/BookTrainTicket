@@ -56,9 +56,6 @@ public class ClientWindow extends JFrame {
         outputTextArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(outputTextArea);
         mainPanel.add(scrollPane, BorderLayout.SOUTH);
-
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(4, 6));
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -72,17 +69,8 @@ public class ClientWindow extends JFrame {
         String[] destinationOptions = { "HANOI", "HAIPHONG", "DANANG", "QUANGNAM", "NHATRANG", "DALAT", "HOCHIMINH" };
         // Tạo JComboBox cho departureTime
         String[] departureTimeOptions = { "00:00 AM", "01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM", "06:00 AM", "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 AM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM", "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM" };
-        // Tạo JTextField cho date
-        dateChooser = new JDateChooser();
         // Tạo JComboBox cho seatCount
         Integer[] seatCountOptions = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
-        seatCountComboBox = new JComboBox<>(seatCountOptions);
-        // Tạo JTextField cho seatPrice
-        seatPriceField = new JTextField();
-        // Tạo JTextField cho customerName
-        customerNameField = new JTextField();
-        // Tạo JTextField cho customerID
-        customerIDField = new JTextField();
 
         JButton addButton = new JButton("Add Ticket");
         addButton.addActionListener(new ActionListener() {
@@ -125,36 +113,6 @@ public class ClientWindow extends JFrame {
                 deleteTicket();
             }
         });
-
-
-        // Add label và input vào giao diện
-        inputPanel.add(new JLabel("Train:"));
-        inputPanel.add(new JLabel("Train Carriage:"));
-        inputPanel.add(new JLabel("Source:"));
-        inputPanel.add(new JLabel("Destination:"));
-        inputPanel.add(new JLabel("Departure Time:"));
-        trainComboBox = new JComboBox<>(trainOptions);
-        carriageComboBox = new JComboBox<>(carriageOptions);
-        sourceComboBox = new JComboBox<>(sourceOptions);
-        destinationComboBox = new JComboBox<>(destinationOptions);
-        departureTimeComboBox = new JComboBox<>(departureTimeOptions);
-        inputPanel.add(trainComboBox);
-        inputPanel.add(carriageComboBox);
-        inputPanel.add(sourceComboBox);
-        inputPanel.add(destinationComboBox);
-        inputPanel.add(departureTimeComboBox);
-        inputPanel.add(new JLabel("Date:"));
-        inputPanel.add(new JLabel("Seat Count:"));
-        inputPanel.add(new JLabel("Seat Price:"));
-        inputPanel.add(new JLabel("Customer Name:"));
-        inputPanel.add(new JLabel("Customer ID:"));
-        inputPanel.add(dateChooser);
-        inputPanel.add(seatCountComboBox);
-        inputPanel.add(seatPriceField);
-        inputPanel.add(customerNameField);
-        inputPanel.add(customerIDField);
-
-        mainPanel.add(inputPanel, BorderLayout.CENTER);
         getContentPane().add(mainPanel, BorderLayout.NORTH);
 
         // Thêm các nút vào giao diện
@@ -182,6 +140,47 @@ public class ClientWindow extends JFrame {
 
         JScrollPane tableScrollPane = new JScrollPane(ticketTable);
         mainPanel.add(tableScrollPane, BorderLayout.SOUTH);
+        
+                JPanel inputPanel = new JPanel();
+                getContentPane().add(inputPanel, BorderLayout.SOUTH);
+                inputPanel.setLayout(new GridLayout(4, 6));
+                // Tạo JTextField cho date
+                dateChooser = new JDateChooser();
+                seatCountComboBox = new JComboBox<>(seatCountOptions);
+                // Tạo JTextField cho seatPrice
+                seatPriceField = new JTextField();
+                // Tạo JTextField cho customerName
+                customerNameField = new JTextField();
+                // Tạo JTextField cho customerID
+                customerIDField = new JTextField();
+                
+                
+                        // Add label và input vào giao diện
+                        inputPanel.add(new JLabel("Train:"));
+                        inputPanel.add(new JLabel("Train Carriage:"));
+                        inputPanel.add(new JLabel("Source:"));
+                        inputPanel.add(new JLabel("Destination:"));
+                        inputPanel.add(new JLabel("Departure Time:"));
+                        trainComboBox = new JComboBox<>(trainOptions);
+                        carriageComboBox = new JComboBox<>(carriageOptions);
+                        sourceComboBox = new JComboBox<>(sourceOptions);
+                        destinationComboBox = new JComboBox<>(destinationOptions);
+                        departureTimeComboBox = new JComboBox<>(departureTimeOptions);
+                        inputPanel.add(trainComboBox);
+                        inputPanel.add(carriageComboBox);
+                        inputPanel.add(sourceComboBox);
+                        inputPanel.add(destinationComboBox);
+                        inputPanel.add(departureTimeComboBox);
+                        inputPanel.add(new JLabel("Date:"));
+                        inputPanel.add(new JLabel("Seat Count:"));
+                        inputPanel.add(new JLabel("Seat Price:"));
+                        inputPanel.add(new JLabel("Customer Name:"));
+                        inputPanel.add(new JLabel("Customer ID:"));
+                        inputPanel.add(dateChooser);
+                        inputPanel.add(seatCountComboBox);
+                        inputPanel.add(seatPriceField);
+                        inputPanel.add(customerNameField);
+                        inputPanel.add(customerIDField);
 
         // Hiển thị cửa sổ
         setVisible(true);
