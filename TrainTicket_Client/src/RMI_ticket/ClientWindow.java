@@ -10,10 +10,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Date;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
 import com.toedter.calendar.JDateChooser;
 
 
@@ -27,22 +25,52 @@ public class ClientWindow extends JFrame {
     private JTable ticketTable;
     private DefaultTableModel tableModel;
     private JDateChooser dateChooser; // Thay thế JTextField bằng JDateChooser
+    
+    private JTextField serverAddressField; //port
 
 
 
     public ClientWindow() {
         getContentPane().setLayout(new BorderLayout());
+        
+        
         // Khởi tạo RMI và giao diện
-        try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-            ticketBookingService = (TicketBookingService) registry.lookup("TicketBookingService");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error connecting to server: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
+     // Tạo giao diện
+        createUI();
+
+        // Hiển thị hộp thoại để nhập serverAddress
+        String serverAddress = getServerAddressFromUser();
+        if (serverAddress != null) {
+            try {
+                Registry registry = LocateRegistry.getRegistry(serverAddress, 1099);
+                // Khởi tạo ticketBookingService từ RMI registry
+                ticketBookingService = (TicketBookingService) registry.lookup("TicketBookingService");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error connecting to server: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(1);
+            }
         }
 
-        // Tạo giao diện
+    }
+ // Hàm hiển thị hộp thoại để nhập serverAddress
+    private String getServerAddressFromUser() {
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel("Enter Server Address:");
+        JTextField serverAddressField = new JTextField(20);
+        panel.add(label);
+        panel.add(serverAddressField);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Server Address Input", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            return serverAddressField.getText();
+        } else {
+            return null;
+        }
+    }
+    
+ // Tạo giao diện
+    private void createUI() {
         setTitle("Ticket Booking Client");
         setSize(984, 574);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,8 +108,6 @@ public class ClientWindow extends JFrame {
             }
         });
 
-
-
         JButton viewButton = new JButton("View Ticket Info");
         viewButton.addActionListener(new ActionListener() {
             @Override
@@ -90,8 +116,6 @@ public class ClientWindow extends JFrame {
             }
         });
 
-
-
         JButton searchButton = new JButton("Search Ticket");
         searchButton.addActionListener(new ActionListener() {
             @Override
@@ -99,6 +123,7 @@ public class ClientWindow extends JFrame {
                 searchTicketByID();
             }
         });
+        
         JButton updateButton = new JButton("Update Ticket");
         updateButton.addActionListener(new ActionListener() {
             @Override
@@ -106,6 +131,7 @@ public class ClientWindow extends JFrame {
                 updateTicket();
             }
         });
+        
         JButton deleteButton = new JButton("Delete Ticket");
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -121,9 +147,9 @@ public class ClientWindow extends JFrame {
         buttonPanel.add(viewButton);
         buttonPanel.add(updateButton);
         buttonPanel.add(deleteButton);
-        mainPanel.add(buttonPanel, BorderLayout.NORTH);
         
-        // Trong constructor của ClientWindow, sau khi tạo inputPanel và buttonPanel.
+        mainPanel.add(buttonPanel, BorderLayout.NORTH);
+
         tableModel = new DefaultTableModel();
         ticketTable = new JTable(tableModel);
         tableModel.addColumn("ID");
@@ -140,51 +166,51 @@ public class ClientWindow extends JFrame {
 
         JScrollPane tableScrollPane = new JScrollPane(ticketTable);
         mainPanel.add(tableScrollPane, BorderLayout.SOUTH);
-        
-                JPanel inputPanel = new JPanel();
-                getContentPane().add(inputPanel, BorderLayout.SOUTH);
-                inputPanel.setLayout(new GridLayout(4, 6));
-                // Tạo JTextField cho date
-                dateChooser = new JDateChooser();
-                seatCountComboBox = new JComboBox<>(seatCountOptions);
-                // Tạo JTextField cho seatPrice
-                seatPriceField = new JTextField();
-                // Tạo JTextField cho customerName
-                customerNameField = new JTextField();
-                // Tạo JTextField cho customerID
-                customerIDField = new JTextField();
-                
-                
-                        // Add label và input vào giao diện
-                        inputPanel.add(new JLabel("Train:"));
-                        inputPanel.add(new JLabel("Train Carriage:"));
-                        inputPanel.add(new JLabel("Source:"));
-                        inputPanel.add(new JLabel("Destination:"));
-                        inputPanel.add(new JLabel("Departure Time:"));
-                        trainComboBox = new JComboBox<>(trainOptions);
-                        carriageComboBox = new JComboBox<>(carriageOptions);
-                        sourceComboBox = new JComboBox<>(sourceOptions);
-                        destinationComboBox = new JComboBox<>(destinationOptions);
-                        departureTimeComboBox = new JComboBox<>(departureTimeOptions);
-                        inputPanel.add(trainComboBox);
-                        inputPanel.add(carriageComboBox);
-                        inputPanel.add(sourceComboBox);
-                        inputPanel.add(destinationComboBox);
-                        inputPanel.add(departureTimeComboBox);
-                        inputPanel.add(new JLabel("Date:"));
-                        inputPanel.add(new JLabel("Seat Count:"));
-                        inputPanel.add(new JLabel("Seat Price:"));
-                        inputPanel.add(new JLabel("Customer Name:"));
-                        inputPanel.add(new JLabel("Customer ID:"));
-                        inputPanel.add(dateChooser);
-                        inputPanel.add(seatCountComboBox);
-                        inputPanel.add(seatPriceField);
-                        inputPanel.add(customerNameField);
-                        inputPanel.add(customerIDField);
+
+        JPanel inputPanel = new JPanel();
+        getContentPane().add(inputPanel, BorderLayout.SOUTH);
+        inputPanel.setLayout(new GridLayout(4, 6));
+        // Tạo JTextField cho date
+        dateChooser = new JDateChooser();
+        seatCountComboBox = new JComboBox<>(seatCountOptions);
+        // Tạo JTextField cho seatPrice
+        seatPriceField = new JTextField();
+        // Tạo JTextField cho customerName
+        customerNameField = new JTextField();
+        // Tạo JTextField cho customerID
+        customerIDField = new JTextField();
+
+        // Add label và input vào giao diện
+        inputPanel.add(new JLabel("Train:"));
+        inputPanel.add(new JLabel("Train Carriage:"));
+        inputPanel.add(new JLabel("Source:"));
+        inputPanel.add(new JLabel("Destination:"));
+        inputPanel.add(new JLabel("Departure Time:"));
+        trainComboBox = new JComboBox<>(trainOptions);
+        carriageComboBox = new JComboBox<>(carriageOptions);
+        sourceComboBox = new JComboBox<>(sourceOptions);
+        destinationComboBox = new JComboBox<>(destinationOptions);
+        departureTimeComboBox = new JComboBox<>(departureTimeOptions);
+        inputPanel.add(trainComboBox);
+        inputPanel.add(carriageComboBox);
+        inputPanel.add(sourceComboBox);
+        inputPanel.add(destinationComboBox);
+        inputPanel.add(departureTimeComboBox);
+        inputPanel.add(new JLabel("Date:"));
+        inputPanel.add(new JLabel("Seat Count:"));
+        inputPanel.add(new JLabel("Seat Price:"));
+        inputPanel.add(new JLabel("Customer Name:"));
+        inputPanel.add(new JLabel("Customer ID:"));
+        inputPanel.add(dateChooser);
+        inputPanel.add(seatCountComboBox);
+        inputPanel.add(seatPriceField);
+        inputPanel.add(customerNameField);
+        inputPanel.add(customerIDField);
 
         // Hiển thị cửa sổ
         setVisible(true);
     }
+
 
     private void searchTicketByID() {
         try {

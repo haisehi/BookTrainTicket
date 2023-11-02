@@ -1,6 +1,8 @@
 package RMI_ticket;
 
+import java.net.InetAddress;
 import java.rmi.RemoteException;
+import java.rmi.UnknownHostException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.RemoteServer;
@@ -8,7 +10,7 @@ import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class Server {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnknownHostException {
         try {
             // Tạo một thanh ghi ở phía server
             Registry registry = LocateRegistry.createRegistry(1099);
@@ -17,6 +19,10 @@ public class Server {
             // Đăng ký object trên thanh ghi
             registry.rebind("TicketBookingService", ticketBookingService);
             System.out.println("Server is running...");
+            
+            InetAddress localHost = InetAddress.getLocalHost();
+			System.out.println("Server is running...");
+			System.out.println("Server IP Address: " + localHost.getHostAddress());
 
             // Thêm mã để hiển thị tên của client khi kết nối
             RemoteServer.setLog(System.out);
